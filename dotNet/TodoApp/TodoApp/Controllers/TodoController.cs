@@ -53,15 +53,26 @@ namespace TodoApp.Controllers
             return response;
         }
 
-        [HttpPut]
-        [Route("UpdateTodo")]
-        public Response UpdateTodo(Todo todo)
+           [HttpPut]
+           [Route("UpdateTodo")]
+           public Response UpdateTodo(Todo todo)
+           {
+               SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("CrudConnection"));
+               Response response = new Response();
+               DAL dal = new DAL();
+               response = dal.UpdateTodo(connection, todo);
+               return response;
+           }
+        /*[HttpPut]
+        [Route("{id.guid}")]
+        public async Task<IActionResult> UpdateTodo([FormRoute] Guid id, Todo todoUpdateRequest)
         {
-            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("CrudConnection"));
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.UpdateTodo(connection, todo);
-            return response;
-        }
+            var todo = await _todoDbContext.Todos.FindAsync(id);
+            if (todo != null)
+                return NotFound();
+            todo.IsActive = todoUpdateRequest.IsActive;
+            await _todoDbContext.SaveChangeAsyn();
+            return Ok(todo);
+        }*/
     }
 }

@@ -28,6 +28,7 @@ namespace TodoApp.Models
                     todo.Title= Convert.ToString(dt.Rows[i]["Title"]);
 
                     todo.DueOn = Convert.ToDateTime(dt.Rows[i]["DueOn"]);
+                    todo.CreatedOn = Convert.ToDateTime(dt.Rows[i]["CreatedOn"]);
 
                     todo.Descrip = Convert.ToString(dt.Rows[i]["Descrip"]);
              
@@ -61,7 +62,7 @@ namespace TodoApp.Models
         public Response AddTodo(SqlConnection connection, Todo todo)
         {
             Response response = new Response();
-            SqlCommand cmd = new SqlCommand("INSERT INTO todo (Descrip,IsActive,Title,CreatedOn,DueOn) VALUES('" + todo.Descrip + "','" + todo.IsActive + "','" + todo.Title + "','" + todo.DueOn + "',GETdATE())", connection);
+            SqlCommand cmd = new SqlCommand("INSERT INTO todo (Descrip,IsActive,Title,DueOn,CreatedOn) VALUES('" + todo.Descrip + "','" + todo.IsActive + "','" + todo.Title + "','" + todo.DueOn + "',GETdATE())", connection);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
             connection.Close();
