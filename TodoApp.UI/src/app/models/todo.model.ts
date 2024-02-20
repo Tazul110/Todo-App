@@ -3,6 +3,7 @@ export interface Todo {
     title: string,
     descrip: string,
     isActive: number,
-    dueOn:Date
+    dueOn:Date,
+    createdOn:Date
     
 };

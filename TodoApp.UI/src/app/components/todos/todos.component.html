@@ -1,45 +1,134 @@
-<p>todos works!!!</p>
+
 
 <div class="container">
     <div class="row">
         <h1>Add Todo</h1>
-        <form>
+        <!-- <form #form="ngForm" (ngSubmit)="addTodo()">
             <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <input type="text" class="form-control" id="description" aria-describedby="emailHelp">
+              <label for="descrip" class="form-label">Description</label>
+              <input type="text" class="form-control" id="descrip" 
+              name="descrip"
+              [(ngModel)]="newTodo.descrip">
               
             </div>
             
             <button type="submit" class="btn btn-primary">Submit</button>
+          </form> -->
+          <!-- <form #form="ngForm" (ngSubmit)="addTodo()">
+
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newTodo.title">
+            </div>
+
+            <div class="mb-3">
+              <label for="descrip" class="form-label">Description</label>
+              <input type="text" class="form-control" id="descrip" name="descrip" [(ngModel)]="newTodo.descrip">
+            </div>
+          
+            
+          
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form> -->
+
+          <form #form="ngForm" (ngSubmit)="addTodo()" class="mt-4">
+            <div class="mb-3">
+              <label for="title" class="form-label"><h5>Title</h5></label>
+              <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newTodo.title" required>
+            </div>
+          
+            <div class="mb-3">
+              <label for="descrip" class="form-label"><h5>Description</h5></label>
+              <input type="text" class="form-control" id="descrip" name="descrip" [(ngModel)]="newTodo.descrip" required>
+            </div>
+          
+            <div class="mb-3">
+              <label for="dueOn" class="form-label"><h5>Due Date</h5></label>
+              <input type="date" class="form-control" id="dueOn" name="dueOn" [(ngModel)]="newTodo.dueOn" required>
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Submit</button>
           </form>
+          
+          
+          
     </div>
-    <div class="row">
-        <h1>My Todos</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Created Date</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Completed?</th>
-                    
-                    
-                  </tr>
-            </thead>
-            <tbody>
-              
-                <tr *ngFor="let todo of todos">
-                  <th>{{ todo.title }}</th>
-                    <th>{{ todo.descrip }}</th>
-                    <td>{{ todo.id| date: 'MM/dd/yyyy hh:mm a' }}</td>
-                    <td>{{ todo.dueOn | date: 'MM/dd/yyyy hh:mm a'}}</td>
-                    <td>{{ todo.isActive }}</td>
-                    
-                    
-                  </tr>
-              
-            </tbody>
-          </table>
+    <div class="container mt-4">
+      <h1 class="text-center mb-4">My Todos</h1>
+    
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th >Title</th>
+              <th >Description</th>
+              <th >Created Date</th>
+              <th >Due Date</th>
+              <th >Completed?</th>
+              <th >Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let todo of todos">
+              <td>
+                 <h5>{{ todo.title }}</h5>    
+              </td>
+              <td>{{ todo.descrip }}</td>
+              <td>{{ todo.createdOn | date: 'MM/dd/yyyy hh:mm a' }}</td>
+              <td>{{ todo.dueOn | date: 'MM/dd/yyyy hh:mm a' }}</td>
+              <td><input type="checkbox"
+                [checked]="todo.isActive" 
+                 /></td>
+                 <!-- (change)="onCompletedChange(todo.id, todo)" -->
+                 <td class="text-center">
+                  <a href="javascript:void(0);" class="btn btn-danger btn-sm" (click)="deleteTodo(todo.id)">
+                    Delete
+                  </a>
+                  <button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="fun(todo.id, todo)" class="btn btn-primary btn-sm mx-2">
+                    Edit
+                  </button>
+                  <!-- <a routerLink="/students/{{todo.id}}/edit" class="btn btn-success mx-2">Edit</a> -->
+                </td>
+                
+                
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="title" class="form-label"><h5>Title</h5></label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newTodo2.title" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="descrip" class="form-label"><h5>Description</h5></label>
+          <input type="text" class="form-control" id="descrip" name="descrip" [(ngModel)]="newTodo2.descrip" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="dueOn" class="form-label"><h5>Due Date</h5></label>
+          <input type="date" class="form-control" id="dueOn" name="dueOn" [(ngModel)]="newTodo2.dueOn" required>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateTodo()">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>

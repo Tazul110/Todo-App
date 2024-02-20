@@ -26,8 +26,17 @@ export class TodoService {
   //   );
   // }
 
-  // addTodo(newTodo: Todo): Observable<Todo>{
-  //   // newTodo.id ='00000000-0000-0000-0000-000000000000';
-  //   return this.http.post<Todo>(this.baseApiUrl + '/api/todo', newTodo);
-  // }
+  addTodo(newTodo: Todo): Observable<Todo>{
+     //newTodo.id ='00000000-0000-0000-0000-000000000000';
+    return this.http.post<Todo>(this.baseApiUrl + '/api/Todo/AddTodo', newTodo);
+  }
+
+  updateTodo(newTodo: Todo): Observable<Todo>{
+    //newTodo.id ='00000000-0000-0000-0000-000000000000';
+   return this.http.put<Todo>(this.baseApiUrl + '/api/Todo/UpdateTodo', newTodo);
+ }
+
+  deleteTodo(id:number): Observable<Todo>{
+    return this.http.delete<Todo>(this.baseApiUrl + '/api/Todo/DeleteTodo/' + id);
+  }
 }
